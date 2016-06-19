@@ -35,7 +35,7 @@ const Wordound = React.createClass({
 
     onFindInputChange(evt) {
     	this.setState({
-    		findInputValue: evt.target.value.toLowerCase().trim()
+    		findInputValue: evt.target.value.trim()
     	});
     },
 
@@ -62,19 +62,28 @@ const Wordound = React.createClass({
     		return;
     	}
 
-    	for (var i = 0; i < word.length; i++) { 
-		 	const letter = word.charAt(i);
-		 	const isExist = this.state.mainWordValue.toLowerCase().indexOf(letter.toLowerCase()) >= 0;
-		 	console.log('letter', letter, this.state.mainWordValue, isExist)
-		 	if (!isExist) {
-		 		isValid = false;
+    	let mainWordData = {};
+
+    	for (var i = 0; i < this.state.mainWordValue.length; i++) { 
+		 	const letterMain = this.state.mainWordValue.charAt(i);
+		 	if (!mainWordData[letterMain]) {
+		 		mainWordData[letterMain] = 1;
+		 	} else {
+		 		mainWordData[letterMain] += 1;
 		 	}
+
 		}
 
-		if (!isValid) {
-			console.log('not match')
-			return;
-		};
+    	for (var i = 0; i < word.length; i++) { 
+		 	const letter = word.charAt(i);
+
+		 	if (!mainWordData[letter]) {
+		 		console.log('no repeat letters')
+		 		return;
+		 	}
+		 	mainWordData[letter] -= 1;
+		}
+
     	this.checkWordExisting();
     },
 

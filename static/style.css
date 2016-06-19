@@ -46,6 +46,7 @@
 	display: inline-block;
 	font-size: 20px;
 	text-align: center;
+	text-transform: lowercase;
 }
 
 .wordound-counter {
