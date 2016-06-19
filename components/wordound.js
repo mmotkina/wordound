@@ -144,6 +144,35 @@ const Wordound = React.createClass({
     	return this.state.lang === 'ru' ? 'en' : 'ru';
     },
 
+    getCounter() {
+    	if (this.state.foundedWords.length === 0) {
+    		return null;
+    	}
+
+    	return (
+    		<span className="wordound-counter">{this.state.foundedWords.length}</span>
+    	);
+    },
+
+    getFindingBlocks() {
+    	if (!this.state.mainWordValue) return null;
+    	return (
+    		<div>
+	    		<div className="wordound-input_found">
+					<Input 
+						value={this.state.findInputValue}
+						placeholder={this.state.placeholders[this.state.lang].findInputPlaceholder}
+						onChange={this.onFindInputChange}
+						onKeyPress={this.onKeyPress} />
+				</div>
+				{this.getCounter()}
+				<ul className="wordound-list">
+					{this.getWordsList()}
+				</ul>
+			</div>
+		);
+    },
+
 	render() {
 		return (
 			<div className='wordound'>
@@ -156,17 +185,7 @@ const Wordound = React.createClass({
 						placeholder={this.state.placeholders[this.state.lang].mainWordPlaceholder}
 						onChange={this.onMainInputChange} />
 				</div>
-				<div className="wordound-input_found">
-					<Input 
-						value={this.state.findInputValue}
-						placeholder={this.state.placeholders[this.state.lang].findInputPlaceholder}
-						onChange={this.onFindInputChange}
-						onKeyPress={this.onKeyPress} />
-				</div>
-				<span className="wordound-counter">{this.state.foundedWords.length}</span>
-				<ul className="wordound-list">
-					{this.getWordsList()}
-				</ul>
+				{this.getFindingBlocks()}
 			</div>
 		);
 	}
