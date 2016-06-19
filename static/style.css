@@ -3,7 +3,7 @@
 	margin: 0 auto;
 }
 
-.page-title {
+.logo {
 	font-style: italic;
 	color: #333;
 }
@@ -15,6 +15,7 @@
 
 .wordound {
 	margin-top: 70px;
+	position: relative;
 }
 
 .wordound-input_main .input {
@@ -82,3 +83,17 @@
 	color: #999;
 	margin-left: 20px;
 }
+
+.lang {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-family: Arial;
+	font-size: 20px;
+	color: #999;
+	cursor: pointer;
+}
+
+.lang:hover {
+	color: #000;
+};
