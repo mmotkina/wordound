@@ -1,5 +1,6 @@
 import React from 'react';
 import Input from './input';
+import Lang from './lang';
 
 const Wordound = React.createClass({
 	getInitialState() {
@@ -7,9 +8,20 @@ const Wordound = React.createClass({
 			mainWordValue: sessionStorage.getItem('wordound-word') || null,
 			findInputValue: null,
 			dictionaryKey: 'dict.1.1.20160618T153640Z.8471ffbbc445f0b4.d908fbd6047c36a3f59838b71052e0fb1d93536f',
-			dictionaryUrl: 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?lang=ru-ru',
+			dictionaryUrl: 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?',
 			foundedWords: sessionStorage.getItem('wordound-words') && sessionStorage.getItem('wordound-words').split(',') || [],
-			meanings: {}
+			meanings: {},
+			placeholders: {
+				en: {
+					mainWordPlaceholder: 'create loong word',
+					findInputPlaceholder: 'find the words'
+				},
+				ru: {
+					mainWordPlaceholder: 'придумайте слово',
+					findInputPlaceholder: 'подобранное слово'
+				}
+			},
+			lang: 'ru'
         };
     },
 
@@ -31,6 +43,14 @@ const Wordound = React.createClass({
         if (evt.key === 'Enter') {
           	this.validate();
         }
+    },
+
+    onLangClick(evt) {
+    	this.setState({
+    		mainWordValue: null,
+    		lang: this.getOtherLang()
+    	});
+    	this.clean();
     },
 
     validate() {
@@ -60,7 +80,7 @@ const Wordound = React.createClass({
 
     checkWordExisting() {
     	$.ajax({
-		    url: this.state.dictionaryUrl + '&key=' + this.state.dictionaryKey + '&text=' + encodeURIComponent(this.state.findInputValue),
+		    url: this.state.dictionaryUrl + 'lang=' + this.state.lang + '-' + this.state.lang + '&key=' + this.state.dictionaryKey + '&text=' + encodeURIComponent(this.state.findInputValue),
 		    dataType: 'json',
 		    type: 'GET',
 		    success: function(data) {
@@ -120,19 +140,26 @@ const Wordound = React.createClass({
 		});
     },
 
+    getOtherLang() {
+    	return this.state.lang === 'ru' ? 'en' : 'ru';
+    },
+
 	render() {
 		return (
 			<div className='wordound'>
+				<Lang 
+					text={this.getOtherLang()}
+					onClick={this.onLangClick} />
 				<div className="wordound-input_main">
 					<Input 
 						value={this.state.mainWordValue}
-						placeholder='придумайте слово'
+						placeholder={this.state.placeholders[this.state.lang].mainWordPlaceholder}
 						onChange={this.onMainInputChange} />
 				</div>
 				<div className="wordound-input_found">
 					<Input 
 						value={this.state.findInputValue}
-						placeholder='подобранное слово'
+						placeholder={this.state.placeholders[this.state.lang].findInputPlaceholder}
 						onChange={this.onFindInputChange}
 						onKeyPress={this.onKeyPress} />
 				</div>

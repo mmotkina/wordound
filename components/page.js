@@ -5,7 +5,7 @@ const Page = React.createClass({
 	render() {
 		return (
 			<div className="page">
-				<h1 className="page-title">wordound</h1>
+				<h1 className="logo">wordound</h1>
 				<Wordound />
 			</div>
 		);
