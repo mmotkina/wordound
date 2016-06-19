@@ -1,0 +1,84 @@
+.page {
+	width: 70%;
+	margin: 0 auto;
+}
+
+.page-title {
+	font-style: italic;
+	color: #333;
+}
+
+.input:focus {
+	border: none;
+	outline: none;
+}
+
+.wordound {
+	margin-top: 70px;
+}
+
+.wordound-input_main .input {
+	height: 100px;
+	width: 100%;
+	border-top: none;
+	border-bottom: none;
+	border-left: none;
+	border-right: none;
+	font-size: 50px;
+    text-transform: uppercase;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.wordound-input_found {
+	margin: 30px 0 35px 20px;
+	text-align: center;
+}
+
+.wordound-input_found .input {
+	height: 30px;
+	padding: 15px 6px;
+	border-left: none;
+	border-bottom: none;
+	border-top: none;
+	border-right: none;
+	display: inline-block;
+	font-size: 20px;
+	text-align: center;
+}
+
+.wordound-counter {
+	display: inline-block;
+    height: 30px;
+    width: 30px;
+    background-color: #26ef68;
+    font-size: 17px;
+    border-radius: 100%;
+    color: #fff;
+    padding-top: 6px;
+    box-sizing: border-box;
+    margin: 8px 30px;
+    text-align: center;
+    vertical-align: top;
+    letter-spacing: 0px;
+    font-family: Arial;
+}
+
+.wordound-list {
+	margin-top: 30px;
+	text-align: left;
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+
+.wordound-list_item {
+	list-style: none;
+	font-size: 20px;
+}
+
+.wordound-list_item-info {
+	display: inline-block;
+	color: #999;
+	margin-left: 20px;
+}

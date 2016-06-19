@@ -1,24 +1,31 @@
-var webpack = require('webpack');  
+const webpack = require('webpack');
+const path = require('path');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
 module.exports = {  
   entry: [
-    "./app.js"
+    './app.js'
   ],
   output: {
-    path: __dirname + '/static',
-    filename: "bundle.js"
+    path: path.join(__dirname, '/static'),
+    filename: 'main.js'
   },
   module: {
     loaders: [
       {
-        test: /\.js?$/,
         loader: 'babel-loader',
         query: {
           presets: ['es2015', 'react']
         },
         exclude: /node_modules/
-      }
+      },
+      { 
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+      },
     ]
   },
   plugins: [
+      new ExtractTextPlugin('style.css')
   ]
 };
