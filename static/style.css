@@ -51,6 +51,12 @@
 
 .wordound-counter {
 	display: inline-block;
+	position: relative;
+	vertical-align: top;
+}
+
+.wordound-counter_words {
+	display: inline-block;
     height: 30px;
     width: 30px;
     background-color: #26ef68;
@@ -61,8 +67,16 @@
     box-sizing: border-box;
     margin: 8px 30px;
     text-align: center;
-    vertical-align: top;
     letter-spacing: 0px;
+    font-family: Arial;
+}
+
+.wordound-counter_letters {
+	position: absolute;
+    top: 4px;
+    right: 15px;
+    color: #26ef68;
+    font-size: 13px;
     font-family: Arial;
 }
 

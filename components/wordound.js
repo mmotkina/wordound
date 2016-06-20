@@ -181,12 +181,16 @@ const Wordound = React.createClass({
 
     getCounter() {
     	const foundedWordsLength = this.state.foundedWords.length;
+    	const lettersLength = this.state.foundedWords.join('').length;
     	if (!foundedWordsLength) {
     		return null;
     	}
 
     	return (
-    		<span className="wordound-counter">{foundedWordsLength}</span>
+    		<span className="wordound-counter">
+    			<span className="wordound-counter_words">{foundedWordsLength}</span>
+    			<span className="wordound-counter_letters">{lettersLength}</span>
+    		</span>
     	);
     },
 
