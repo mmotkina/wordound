@@ -1,11 +1,18 @@
 .page {
-	width: 70%;
 	margin: 0 auto;
 }
 
-.logo {
+.wordound-header {
+	width: 70%;
+    margin: 25px auto 70px;
+    position: relative;
+}
+
+.wordound-logo {
 	font-style: italic;
-	color: #333;
+    color: #333;
+    display: block;
+    font-size: 32px;
 }
 
 .input:focus {
@@ -13,9 +20,24 @@
 	outline: none;
 }
 
+input:focus::-webkit-input-placeholder {
+	color:transparent;
+}
+input:focus:-moz-placeholder {
+	color:transparent;
+}
+input:focus::-moz-placeholder {
+	color:transparent;
+}
+input:focus:-ms-input-placeholder {
+	color:transparent;
+} 
+
 .wordound {
 	margin-top: 70px;
-	position: relative;
+    position: relative;
+    width: 90%;
+    margin: 0 auto 30px;
 }
 
 .wordound-input_main .input {
@@ -32,7 +54,7 @@
 }
 
 .wordound-input_found {
-	margin: 30px 0 35px 20px;
+	margin: 20px 0 35px 0;
 	text-align: center;
 }
 
@@ -44,9 +66,14 @@
 	border-top: none;
 	border-right: none;
 	display: inline-block;
-	font-size: 20px;
+	font-size: 23px;
 	text-align: center;
 	text-transform: lowercase;
+}
+
+.wordound-panel {
+	width: 70%;
+	margin: 0 auto;
 }
 
 .wordound-counter {
@@ -65,7 +92,7 @@
     color: #fff;
     padding-top: 6px;
     box-sizing: border-box;
-    margin: 8px 30px;
+    margin: 8px 30px 0 0;
     text-align: center;
     letter-spacing: 0px;
     font-family: Arial;
@@ -101,7 +128,7 @@
 
 .lang {
 	position: absolute;
-	top: 0;
+	top: 8px;
 	right: 0;
 	font-family: Arial;
 	font-size: 20px;
@@ -110,5 +137,11 @@
 }
 
 .lang:hover {
-	color: #000;
+	color: #26ef68;
 };
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+	.wordound-input_main .input {
+		font-size: 30px;
+	}
+}

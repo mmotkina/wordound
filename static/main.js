@@ -76,7 +76,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	    value: true
 	});
 
 	var _react = __webpack_require__(3);
@@ -90,19 +90,14 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Page = _react2.default.createClass({
-		displayName: 'Page',
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				{ className: 'page' },
-				_react2.default.createElement(
-					'h1',
-					{ className: 'logo' },
-					'wordound'
-				),
-				_react2.default.createElement(_wordound2.default, null)
-			);
-		}
+	    displayName: 'Page',
+	    render: function render() {
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'page' },
+	            _react2.default.createElement(_wordound2.default, null)
+	        );
+	    }
 	});
 
 	exports.default = Page;
@@ -19713,7 +19708,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _react = __webpack_require__(3);
@@ -19731,227 +19726,235 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Wordound = _react2.default.createClass({
-	  displayName: 'Wordound',
-	  getInitialState: function getInitialState() {
-	    var storageFoundedWords = sessionStorage.getItem('wordound-words');
+	    displayName: 'Wordound',
+	    getInitialState: function getInitialState() {
+	        var storageFoundedWords = sessionStorage.getItem('wordound-words');
 
-	    return {
-	      mainWord: sessionStorage.getItem('wordound-word') || null,
-	      partWord: null,
-	      foundedWords: storageFoundedWords ? storageFoundedWords.split(',') : [],
-	      meanings: {},
-	      dictionaryKey: 'dict.1.1.20160618T153640Z.8471ffbbc445f0b4.d908fbd6047c36a3f59838b71052e0fb1d93536f',
-	      dictionaryUrl: 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?',
-	      lang: 'ru',
-	      placeholders: {
-	        en: {
-	          mainWordPlaceholder: 'create loong word',
-	          findInputPlaceholder: 'find the words'
-	        },
-	        ru: {
-	          mainWordPlaceholder: 'придумайте слово',
-	          findInputPlaceholder: 'подобранное слово'
+	        return {
+	            mainWord: sessionStorage.getItem('wordound-word') || null,
+	            partWord: null,
+	            foundedWords: storageFoundedWords ? storageFoundedWords.split(',') : [],
+	            meanings: {},
+	            dictionaryKey: 'dict.1.1.20160618T153640Z.8471ffbbc445f0b4.d908fbd6047c36a3f59838b71052e0fb1d93536f',
+	            dictionaryUrl: 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?',
+	            lang: 'ru',
+	            placeholders: {
+	                en: {
+	                    mainWordPlaceholder: 'create loong word',
+	                    findInputPlaceholder: 'find the words'
+	                },
+	                ru: {
+	                    mainWordPlaceholder: 'придумайте слово',
+	                    findInputPlaceholder: 'подобранное слово'
+	                }
+	            }
+	        };
+	    },
+	    onMainInputChange: function onMainInputChange(evt) {
+	        // clean other fields and session storage
+	        this.clean();
+
+	        // set new value
+	        this.setState({
+	            mainWord: evt.target.value
+	        });
+
+	        // save value to session storage
+	        sessionStorage.setItem('wordound-word', evt.target.value.trim());
+	    },
+	    onFindInputChange: function onFindInputChange(evt) {
+	        this.setState({
+	            partWord: evt.target.value.toLowerCase().trim()
+	        });
+	    },
+	    onKeyPress: function onKeyPress(evt) {
+	        if (evt.key === 'Enter') {
+	            this.validate();
 	        }
-	      }
-	    };
-	  },
-	  onMainInputChange: function onMainInputChange(evt) {
-	    // clean other fields and session storage
-	    this.clean();
+	    },
+	    onLangClick: function onLangClick(evt) {
+	        this.clean();
+	        this.setState({
+	            lang: this.getOtherLang()
+	        });
+	    },
+	    validate: function validate() {
+	        var word = this.state.partWord;
+	        var mainWord = this.state.mainWord;
+	        var foundedWords = this.state.foundedWords;
+	        var isValid = true;
 
-	    // set new value
-	    this.setState({
-	      mainWord: evt.target.value
-	    });
-
-	    // save value to session storage
-	    sessionStorage.setItem('wordound-word', evt.target.value.trim());
-	  },
-	  onFindInputChange: function onFindInputChange(evt) {
-	    this.setState({
-	      partWord: evt.target.value.toLowerCase().trim()
-	    });
-	  },
-	  onKeyPress: function onKeyPress(evt) {
-	    if (evt.key === 'Enter') {
-	      this.validate();
-	    }
-	  },
-	  onLangClick: function onLangClick(evt) {
-	    this.clean();
-	    this.setState({
-	      lang: this.getOtherLang()
-	    });
-	  },
-	  validate: function validate() {
-	    var word = this.state.partWord;
-	    var mainWord = this.state.mainWord;
-	    var foundedWords = this.state.foundedWords;
-	    var isValid = true;
-
-	    if (!word || foundedWords.indexOf(word) >= 0 || word === mainWord) {
-	      return;
-	    }
-
-	    var mainWordData = {};
-
-	    for (var i = 0; i < mainWord.length; i++) {
-	      var letterMain = mainWord.charAt(i);
-	      if (!mainWordData[letterMain]) {
-	        mainWordData[letterMain] = 1;
-	      } else {
-	        mainWordData[letterMain] += 1;
-	      }
-	    }
-
-	    console.log('mainWordData', mainWordData);
-
-	    for (var i = 0; i < word.length; i++) {
-	      var letter = word.charAt(i);
-
-	      if (!mainWordData[letter]) {
-	        console.log('no repeat letters');
-	        return;
-	      }
-	      mainWordData[letter] -= 1;
-	    }
-
-	    this.checkWordExisting();
-	  },
-	  checkWordExisting: function checkWordExisting() {
-	    var url = [this.state.dictionaryUrl, 'lang=', this.state.lang, '-', this.state.lang, '&key=', this.state.dictionaryKey, '&text=', encodeURIComponent(this.state.partWord)].join('');
-
-	    $.ajax({
-	      url: url,
-	      dataType: 'json',
-	      type: 'GET',
-	      success: function (data) {
-	        if (data.def) {
-	          if (data.def.length === 0) {
+	        if (!word || foundedWords.indexOf(word) >= 0 || word === mainWord) {
 	            return;
-	          }
-	          console.log('data', data);
-	          var foundedWords = [this.state.partWord].concat(this.state.foundedWords);
-
-	          this.saveMeaning(data);
-	          sessionStorage.setItem('wordound-words', foundedWords.join(','));
-
-	          this.setState({
-	            foundedWords: foundedWords,
-	            partWord: null
-	          });
 	        }
-	      }.bind(this),
-	      error: function error() {
-	        console.log('Something wrong with request, try again');
-	      }
-	    });
-	  },
-	  saveMeaning: function saveMeaning(data) {
-	    var meanings = [];
 
-	    if (data.def && data.def[0]) {
-	      data.def[0].tr.map(function (tr) {
-	        if (tr.syn) {
-	          tr.syn.map(function (item) {
-	            if (meanings.length >= 3) return;
-	            meanings.push(item.text);
-	          });
+	        var mainWordData = {};
+
+	        for (var i = 0; i < mainWord.length; i++) {
+	            var letterMain = mainWord.charAt(i);
+	            if (!mainWordData[letterMain]) {
+	                mainWordData[letterMain] = 1;
+	            } else {
+	                mainWordData[letterMain] += 1;
+	            }
 	        }
-	      });
+
+	        console.log('mainWordData', mainWordData);
+
+	        for (var i = 0; i < word.length; i++) {
+	            var letter = word.charAt(i);
+
+	            if (!mainWordData[letter]) {
+	                console.log('no repeat letters');
+	                return;
+	            }
+	            mainWordData[letter] -= 1;
+	        }
+	        this.checkWordExisting();
+	    },
+	    checkWordExisting: function checkWordExisting() {
+	        var url = [this.state.dictionaryUrl, 'lang=', this.state.lang, '-', this.state.lang, '&key=', this.state.dictionaryKey, '&text=', encodeURIComponent(this.state.partWord)].join('');
+
+	        $.ajax({
+	            url: url,
+	            dataType: 'json',
+	            type: 'GET',
+	            success: function (data) {
+	                if (data.def) {
+	                    if (data.def.length === 0) {
+	                        return;
+	                    }
+	                    console.log('data', data);
+	                    var foundedWords = [this.state.partWord].concat(this.state.foundedWords);
+
+	                    this.saveMeaning(data);
+	                    sessionStorage.setItem('wordound-words', foundedWords.join(','));
+
+	                    this.setState({
+	                        foundedWords: foundedWords,
+	                        partWord: null
+	                    });
+	                }
+	            }.bind(this),
+	            error: function error() {
+	                console.log('Something wrong with request, try again');
+	            }
+	        });
+	    },
+	    saveMeaning: function saveMeaning(data) {
+	        var meanings = [];
+
+	        if (data.def && data.def[0]) {
+	            data.def[0].tr.map(function (tr) {
+	                if (tr.syn) {
+	                    tr.syn.map(function (item) {
+	                        if (meanings.length >= 3) return;
+	                        meanings.push(item.text);
+	                    });
+	                }
+	            });
+	        }
+
+	        this.state.meanings[this.state.partWord] = meanings.join(', ');
+	    },
+	    clean: function clean() {
+	        sessionStorage.removeItem('wordound-word');
+	        sessionStorage.removeItem('wordound-words');
+
+	        this.state.mainWord = null;
+	        this.state.foundedWords = [];
+	    },
+	    getWordsList: function getWordsList() {
+	        var _this = this;
+
+	        return this.state.foundedWords.map(function (item, index) {
+	            var mean = _this.state.meanings[item] || '';
+	            return _react2.default.createElement(
+	                'li',
+	                { key: index, className: 'wordound-list_item' },
+	                item,
+	                _react2.default.createElement(
+	                    'span',
+	                    { className: 'wordound-list_item-info' },
+	                    mean
+	                )
+	            );
+	        });
+	    },
+	    getOtherLang: function getOtherLang() {
+	        return this.state.lang === 'ru' ? 'en' : 'ru';
+	    },
+	    getCounter: function getCounter() {
+	        var foundedWordsLength = this.state.foundedWords.length;
+	        var lettersLength = this.state.foundedWords.join('').length;
+	        if (!foundedWordsLength) {
+	            return null;
+	        }
+
+	        return _react2.default.createElement(
+	            'span',
+	            { className: 'wordound-counter' },
+	            _react2.default.createElement(
+	                'span',
+	                { className: 'wordound-counter_words' },
+	                foundedWordsLength
+	            ),
+	            _react2.default.createElement(
+	                'span',
+	                { className: 'wordound-counter_letters' },
+	                lettersLength
+	            )
+	        );
+	    },
+	    getFindingBlocks: function getFindingBlocks() {
+	        if (!this.state.mainWord) return null;
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'wordound-panel' },
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'wordound-input_found' },
+	                _react2.default.createElement(_input2.default, {
+	                    value: this.state.partWord,
+	                    placeholder: this.state.placeholders[this.state.lang].findInputPlaceholder,
+	                    onChange: this.onFindInputChange,
+	                    onKeyPress: this.onKeyPress })
+	            ),
+	            this.getCounter(),
+	            _react2.default.createElement(
+	                'ul',
+	                { className: 'wordound-list' },
+	                this.getWordsList()
+	            )
+	        );
+	    },
+	    render: function render() {
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'wordound' },
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'wordound-header' },
+	                _react2.default.createElement(
+	                    'h1',
+	                    { className: 'wordound-logo' },
+	                    'wordound'
+	                ),
+	                _react2.default.createElement(_lang2.default, {
+	                    text: this.getOtherLang(),
+	                    onClick: this.onLangClick })
+	            ),
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'wordound-input_main' },
+	                _react2.default.createElement(_input2.default, {
+	                    value: this.state.mainWord,
+	                    placeholder: this.state.placeholders[this.state.lang].mainWordPlaceholder,
+	                    onChange: this.onMainInputChange })
+	            ),
+	            this.getFindingBlocks()
+	        );
 	    }
-
-	    this.state.meanings[this.state.partWord] = meanings.join(', ');
-	  },
-	  clean: function clean() {
-	    sessionStorage.removeItem('wordound-word');
-	    sessionStorage.removeItem('wordound-words');
-
-	    this.state.mainWord = null;
-	    this.state.foundedWords = [];
-	  },
-	  getWordsList: function getWordsList() {
-	    var _this = this;
-
-	    return this.state.foundedWords.map(function (item, index) {
-	      var mean = _this.state.meanings[item] || '';
-	      return _react2.default.createElement(
-	        'li',
-	        { key: index, className: 'wordound-list_item' },
-	        item,
-	        _react2.default.createElement(
-	          'span',
-	          { className: 'wordound-list_item-info' },
-	          mean
-	        )
-	      );
-	    });
-	  },
-	  getOtherLang: function getOtherLang() {
-	    return this.state.lang === 'ru' ? 'en' : 'ru';
-	  },
-	  getCounter: function getCounter() {
-	    var foundedWordsLength = this.state.foundedWords.length;
-	    var lettersLength = this.state.foundedWords.join('').length;
-	    if (!foundedWordsLength) {
-	      return null;
-	    }
-
-	    return _react2.default.createElement(
-	      'span',
-	      { className: 'wordound-counter' },
-	      _react2.default.createElement(
-	        'span',
-	        { className: 'wordound-counter_words' },
-	        foundedWordsLength
-	      ),
-	      _react2.default.createElement(
-	        'span',
-	        { className: 'wordound-counter_letters' },
-	        lettersLength
-	      )
-	    );
-	  },
-	  getFindingBlocks: function getFindingBlocks() {
-	    if (!this.state.mainWord) return null;
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'wordound-input_found' },
-	        _react2.default.createElement(_input2.default, {
-	          value: this.state.partWord,
-	          placeholder: this.state.placeholders[this.state.lang].findInputPlaceholder,
-	          onChange: this.onFindInputChange,
-	          onKeyPress: this.onKeyPress })
-	      ),
-	      this.getCounter(),
-	      _react2.default.createElement(
-	        'ul',
-	        { className: 'wordound-list' },
-	        this.getWordsList()
-	      )
-	    );
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'wordound' },
-	      _react2.default.createElement(_lang2.default, {
-	        text: this.getOtherLang(),
-	        onClick: this.onLangClick }),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'wordound-input_main' },
-	        _react2.default.createElement(_input2.default, {
-	          value: this.state.mainWord,
-	          placeholder: this.state.placeholders[this.state.lang].mainWordPlaceholder,
-	          onChange: this.onMainInputChange })
-	      ),
-	      this.getFindingBlocks()
-	    );
-	  }
 	});
 
 	exports.default = Wordound;
