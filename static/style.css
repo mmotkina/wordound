@@ -138,10 +138,30 @@ input:focus:-ms-input-placeholder {
 
 .lang:hover {
 	color: #26ef68;
-};
+}
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
 	.wordound-input_main .input {
-		font-size: 30px;
+		font-size: 23px;
+		height: 30px;
+	}
+
+	.wordound-input_found {
+		margin: 0 auto 30px;
+	}
+
+	.wordound-input_found .input {
+		font-size: 18px;
+		height: 23px;
+		padding: 5px 6px;
+	}
+
+	.wordound-panel {
+		width: 100%;
+		text-align: center;
+	}
+
+	.wordound-list_item {
+		font-size: 15px;
 	}
 }
