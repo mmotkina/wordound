@@ -82,13 +82,15 @@ const Wordound = React.createClass({
             }
         }
 
+        console.log('mainWord', mainWord)
         console.log('mainWordData', mainWordData)
 
         for (var i = 0; i < word.length; i++) { 
             const letter = word.charAt(i);
 
             if (!mainWordData[letter]) {
-                console.log('no repeat letters')
+                console.log('no repeat letters, letter - ', letter);
+                console.log('no repeat letters, word - ', word);
                 return;
             }
             mainWordData[letter] -= 1;
