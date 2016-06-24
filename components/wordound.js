@@ -37,7 +37,7 @@ const Wordound = React.createClass({
         });
 
         // save value to session storage
-        sessionStorage.setItem('wordound-word', evt.target.value.trim());
+        sessionStorage.setItem('wordound-word', evt.target.value.toLowerCase().trim());
     },
 
     onFindInputChange(evt) {
