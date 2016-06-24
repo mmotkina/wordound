@@ -60,8 +60,8 @@ const Wordound = React.createClass({
     },
 
     validate() {
-        const word = this.state.partWord;
-        const mainWord = this.state.mainWord;
+        const word = this.state.partWord.toLowerCase();
+        const mainWord = this.state.mainWord.toLowerCase();
         const foundedWords = this.state.foundedWords;
         let isValid = true;
 
