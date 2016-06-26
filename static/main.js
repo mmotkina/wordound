@@ -19751,16 +19751,17 @@
 	        };
 	    },
 	    onMainInputChange: function onMainInputChange(evt) {
+	        var value = evt.target.value.toLowerCase().trim();
 	        // clean other fields and session storage
 	        this.clean();
 
 	        // set new value
 	        this.setState({
-	            mainWord: evt.target.value
+	            mainWord: value
 	        });
 
 	        // save value to session storage
-	        sessionStorage.setItem('wordound-word', evt.target.value.trim());
+	        sessionStorage.setItem('wordound-word', value);
 	    },
 	    onFindInputChange: function onFindInputChange(evt) {
 	        this.setState({
@@ -19799,13 +19800,15 @@
 	            }
 	        }
 
+	        console.log('mainWord', mainWord);
 	        console.log('mainWordData', mainWordData);
 
 	        for (var i = 0; i < word.length; i++) {
 	            var letter = word.charAt(i);
 
 	            if (!mainWordData[letter]) {
-	                console.log('no repeat letters');
+	                console.log('no repeat letters, letter - ', letter);
+	                console.log('no repeat letters, word - ', word);
 	                return;
 	            }
 	            mainWordData[letter] -= 1;
