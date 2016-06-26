@@ -1,23 +1,23 @@
 {
-  "name": "starter kit",
-  "version": "1.2.0",
-  "description": "starter kit",
+  "name": "wordound",
+  "version": "0.0.1",
+  "description": "simple game of words",
   "scripts": "",
-  "repository": "",
-  "author": "",
-  "license": "",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com:mmotkina/wordound.git"
+  },
+  "author": "Maria Motkina",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
-    "css-loader": "^0.23.1",
     "phantomjs-prebuilt": "^2.1.7",
-    "style-loader": "^0.13.1",
     "webpack": "^1.12.12"
   },
   "dependencies": {
-    "extract-text-webpack-plugin": "^1.0.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-router": "^2.4.1"
