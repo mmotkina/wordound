@@ -28,16 +28,17 @@ const Wordound = React.createClass({
     },
 
     onMainInputChange(evt) {
+        const value = evt.target.value.toLowerCase().trim();
         // clean other fields and session storage
         this.clean();
 
         // set new value
         this.setState({
-            mainWord: evt.target.value.toLowerCase().trim()
+            mainWord: value
         });
 
         // save value to session storage
-        sessionStorage.setItem('wordound-word', evt.target.value.trim());
+        sessionStorage.setItem('wordound-word', value);
     },
 
     onFindInputChange(evt) {
