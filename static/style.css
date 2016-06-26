@@ -126,6 +126,27 @@ input:focus:-ms-input-placeholder {
 	margin-left: 20px;
 }
 
+.wordound-random {
+	width: 70%;
+    margin: 5px auto;
+    display: block;
+    text-align: right;
+}
+
+.wordound-random-word {
+	cursor: pointer;
+	display: inline-block;
+	padding: 8px;
+	background-color: rgba(0,0,0,.2);
+	border-radius: 2px;
+	color: #fff;
+	font-family: Arial;
+}
+
+.wordound-random-word:hover {
+	background-color: #26ef68;
+}
+
 .lang {
 	position: absolute;
 	top: 8px;

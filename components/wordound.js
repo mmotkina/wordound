@@ -1,11 +1,12 @@
 import React from 'react';
 import Input from './input';
 import Lang from './lang';
+import words_ru from '../static/words_ru';
+import words_en from '../static/words_en';
 
 const Wordound = React.createClass({
     getInitialState() {
         const storageFoundedWords = sessionStorage.getItem('wordound-words');
-
         return {  
             mainWord: sessionStorage.getItem('wordound-word') || null,
             partWord: null,
@@ -13,11 +14,15 @@ const Wordound = React.createClass({
             meanings: {},
             dictionaryKey: 'dict.1.1.20160618T153640Z.8471ffbbc445f0b4.d908fbd6047c36a3f59838b71052e0fb1d93536f',
             dictionaryUrl: 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?',
-            lang: 'ru',
+            lang: sessionStorage.getItem('wordound-lang') || 'ru',
+            randomWordTitle: {
+                en: 'generate word',
+                ru: 'cгенерировать слово'
+            },
             placeholders: {
                 en: {
                     mainWordPlaceholder: 'create loong word',
-                    findInputPlaceholder: 'find the words'
+                    findInputPlaceholder: 'found word'
                 },
                 ru: {
                     mainWordPlaceholder: 'придумайте слово',
@@ -29,16 +34,7 @@ const Wordound = React.createClass({
 
     onMainInputChange(evt) {
         const value = evt.target.value.toLowerCase().trim();
-        // clean other fields and session storage
-        this.clean();
-
-        // set new value
-        this.setState({
-            mainWord: value
-        });
-
-        // save value to session storage
-        sessionStorage.setItem('wordound-word', value);
+        this.saveMainWord(value);
     },
 
     onFindInputChange(evt) {
@@ -55,9 +51,22 @@ const Wordound = React.createClass({
 
     onLangClick(evt) {
         this.clean();
+        const lang = this.getOtherLang();
+        this.setState({lang});
+        sessionStorage.setItem('wordound-lang', lang);
+    },
+
+    saveMainWord(word) {
+        // clean other fields and session storage
+        this.clean();
+
+        // set new value
         this.setState({
-            lang: this.getOtherLang()
+            mainWord: word
         });
+
+        // save value to session storage
+        sessionStorage.setItem('wordound-word', word);
     },
 
     validate() {
@@ -214,6 +223,20 @@ const Wordound = React.createClass({
         );
     },
 
+    setRandomWord() {
+        const words = (this.state.lang === 'ru') ? words_ru : words_en;
+        const index = Math.floor(Math.random() * (words.length - 1 + 1)) + 1;
+        this.saveMainWord(words[index]);
+    },
+
+    getRandomBlock() {
+        return (
+            <span className="wordound-random">
+                <span onClick={this.setRandomWord} className="wordound-random-word">{this.state.randomWordTitle[this.state.lang]}</span>
+            </span>
+        );
+    },
+
     render() {
         return (
             <div className='wordound'>
@@ -223,6 +246,7 @@ const Wordound = React.createClass({
                         text={this.getOtherLang()}
                         onClick={this.onLangClick} />
                 </div>
+                {this.getRandomBlock()}
                 <div className="wordound-input_main">
                     <Input 
                         value={this.state.mainWord}
