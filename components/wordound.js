@@ -15,6 +15,14 @@ const Wordound = React.createClass({
             dictionaryKey: 'dict.1.1.20160618T153640Z.8471ffbbc445f0b4.d908fbd6047c36a3f59838b71052e0fb1d93536f',
             dictionaryUrl: 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?',
             lang: sessionStorage.getItem('wordound-lang') || 'ru',
+            copyright: {
+                ru: {
+                    __html: 'Реализовано с помощью сервиса <a href="https://tech.yandex.ru/dictionary/">Яндекс.Словарь</a>'
+                },
+                en: {
+                    __html: 'Made with <a href="https://tech.yandex.ru/dictionary/">Yandex.Dictionary</a> '
+                }
+            },
             randomWordTitle: {
                 en: 'generate word',
                 ru: 'cгенерировать слово'
@@ -70,8 +78,8 @@ const Wordound = React.createClass({
     },
 
     validate() {
-        const word = this.state.partWord;
-        const mainWord = this.state.mainWord;
+        const word = this.state.partWord.toLowerCase();
+        const mainWord = this.state.mainWord.toLowerCase();
         const foundedWords = this.state.foundedWords;
         let isValid = true;
 
@@ -242,9 +250,12 @@ const Wordound = React.createClass({
             <div className='wordound'>
                 <div className="wordound-header">
                     <h1 className="wordound-logo">wordound</h1>
-                    <Lang 
-                        text={this.getOtherLang()}
-                        onClick={this.onLangClick} />
+                    <span className="wordound-menu">
+                        <span className="copyright" dangerouslySetInnerHTML={this.state.copyright[this.state.lang]}></span>
+                        <Lang 
+                            text={this.getOtherLang()}
+                            onClick={this.onLangClick} />
+                    </span>
                 </div>
                 {this.getRandomBlock()}
                 <div className="wordound-input_main">
