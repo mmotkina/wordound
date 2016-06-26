@@ -181,6 +181,10 @@ input:focus:-ms-input-placeholder {
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+	.wordound-header {
+		margin-bottom: 40px;
+	}
+
 	.wordound-input_main .input {
 		font-size: 23px;
 		height: 30px;
@@ -203,5 +207,21 @@ input:focus:-ms-input-placeholder {
 
 	.wordound-list_item {
 		font-size: 15px;
+	}
+
+	.wordound-list_item-info {
+		display: none;
+	}
+
+	.copyright {
+		display: none;
+	}
+
+	.wordound-random {
+		margin-bottom: 15px;
+	}
+
+	.wordound-random-word {
+		font-size: 12px;
 	}
 }
