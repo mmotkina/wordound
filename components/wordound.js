@@ -84,6 +84,7 @@ const Wordound = React.createClass({
         let isValid = true;
 
         if (!word ||
+            word.length === 1 ||
             foundedWords.indexOf(word) >= 0 ||
             word === mainWord) {
             return;

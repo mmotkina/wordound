@@ -19807,7 +19807,7 @@
 	        var foundedWords = this.state.foundedWords;
 	        var isValid = true;
 
-	        if (!word || foundedWords.indexOf(word) >= 0 || word === mainWord) {
+	        if (!word || word.length === 1 || foundedWords.indexOf(word) >= 0 || word === mainWord) {
 	            return;
 	        }
 
