@@ -139,6 +139,11 @@ const Wordound = React.createClass({
                     if (data.def.length === 0) {
                         return;
                     }
+
+                    if (data.def[0] && data.def[0].pos && data.def[0].pos === 'предлог') {
+                        console.log('предлог');
+                        return;
+                    }
                     console.log('data', data)
                     const foundedWords = [this.state.partWord].concat(this.state.foundedWords);
 
