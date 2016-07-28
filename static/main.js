@@ -19757,6 +19757,10 @@
 	                en: 'generate word',
 	                ru: 'cгенерировать слово'
 	            },
+	            nounType: {
+	                en: 'noun',
+	                ru: 'предлог'
+	            },
 	            placeholders: {
 	                en: {
 	                    mainWordPlaceholder: 'create loong word',
@@ -19827,11 +19831,18 @@
 
 	        for (var i = 0; i < word.length; i++) {
 	            var letter = word.charAt(i);
-
+	            console.log(mainWordData, letter);
 	            if (!mainWordData[letter]) {
-	                console.log('no repeat letters, letter - ', letter);
-	                console.log('no repeat letters, word - ', word);
-	                return;
+	                console.log(letter);
+	                var isRu = this.state.lang === 'ru';
+	                if (isRu && letter === 'е' && mainWordData['ё']) {
+	                    letter = 'ё';
+	                    console.log('ё letter');
+	                } else {
+	                    console.log('no repeat letters, letter - ', letter);
+	                    console.log('no repeat letters, word - ', word);
+	                    return;
+	                }
 	            }
 	            mainWordData[letter] -= 1;
 	        }
@@ -19850,7 +19861,7 @@
 	                        return;
 	                    }
 
-	                    if (data.def[0] && data.def[0].pos && data.def[0].pos === 'предлог') {
+	                    if (data.def[0] && data.def[0].pos && data.def[0].pos === this.state.nounType[this.state.lang]) {
 	                        console.log('предлог');
 	                        return;
 	                    }
