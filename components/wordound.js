@@ -27,6 +27,10 @@ const Wordound = React.createClass({
                 en: 'generate word',
                 ru: 'cгенерировать слово'
             },
+            nounType: {
+                en: 'noun',
+                ru: 'предлог'
+            },
             placeholders: {
                 en: {
                     mainWordPlaceholder: 'create loong word',
@@ -105,12 +109,17 @@ const Wordound = React.createClass({
         console.log('mainWordData', mainWordData)
 
         for (var i = 0; i < word.length; i++) { 
-            const letter = word.charAt(i);
-
+            let letter = word.charAt(i);
             if (!mainWordData[letter]) {
-                console.log('no repeat letters, letter - ', letter);
-                console.log('no repeat letters, word - ', word);
-                return;
+                var isRu = this.state.lang === 'ru';
+                if (isRu && letter === 'е' && mainWordData['ё']) {
+                    letter = 'ё';
+                    console.log('ё letter')
+                } else {
+                    console.log('no repeat letters, letter - ', letter);
+                    console.log('no repeat letters, word - ', word);
+                    return;
+                }
             }
             mainWordData[letter] -= 1;
         }
@@ -140,7 +149,7 @@ const Wordound = React.createClass({
                         return;
                     }
 
-                    if (data.def[0] && data.def[0].pos && data.def[0].pos === 'предлог') {
+                    if (data.def[0] && data.def[0].pos && data.def[0].pos === this.state.nounType[this.state.lang]) {
                         console.log('предлог');
                         return;
                     }
